@@ -1,0 +1,22 @@
+AllCops:
+  TargetRubyVersion: 2.6
+
+# Will not be documenting *everything* for AoC ;)
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Max: 120
+
+# Exclude specs from block length restrictions:
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*.rb"
