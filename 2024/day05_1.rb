@@ -35,15 +35,10 @@ input = File.read(File.join(File.dirname(__FILE__), "day05.txt"))
 # input = example
 
 def extract_rules(str)
-  h = Hash.new { |h, k| h[k] = [] }
-
-  r, = str.split("\n\n")
-  r.split("\n").each do |rule|
-    key, value = rule.split("|").map(&:to_i)
+  str.each_line.with_object(Hash.new { |h, k| h[k] = [] }) do |line, h|
+    key, value = line.split("|").map(&:to_i)
     h[key] << value
   end
-
-  h
 end
 
 def extract_updates(str)
@@ -54,22 +49,12 @@ def extract_updates(str)
 end
 
 def valid_update?(update, rules)
-  done = []
+  done = Set.new
 
   update.each do |u|
-    if done.empty?
-      done << u
-      next
-    end
+    return false if rules[u].any? { |r| done.include?(r) }
 
-    rules[u].each do |r|
-      if done.any?(r)
-        # puts "rule #{u}|#{r} violated"
-        return false
-      end
-    end
-
-    done << u
+    done.add(u)
   end
 
   true
